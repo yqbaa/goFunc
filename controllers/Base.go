@@ -3,7 +3,7 @@ package controllers
 import (
 	"github.com/astaxie/beego"
 	"math"
-	"reflect"
+
 	"strconv"
 )
 
@@ -26,6 +26,7 @@ func (this *BaseController) success(data interface{}) {
 	json := JSON_DATA{Data: data, Code: 0, Msg: ""}
 	this.Data["json"] = json
 	this.ServeJSON()
+
 }
 
 /*
@@ -41,20 +42,20 @@ func (this *BaseController) error(msg string, code int) {
 /*
  * 分页信息
  */
-func (this *BaseController)page(total int64 , currentPage int64, perPage int64) map[string]interface{}{
+func (this *BaseController) page(total int64, currentPage int64, perPage int64) map[string]interface{} {
 	var page map[string]interface{}
 	page = make(map[string]interface{})
 	page["total"] = total
 	page["perPage"] = perPage
 	page["currentPage"] = currentPage
-	page["totalPage"] = math.Ceil( float64(total) / float64(perPage) )
+	page["totalPage"] = math.Ceil(float64(total) / float64(perPage))
 	return page
 }
 
-func (this *BaseController)getPage() int{
+func (this *BaseController) getPage() int {
 	pageName := beego.AppConfig.String("pageName")
-	page,_:= strconv.Atoi(this.GetString(pageName))
-	if(page < 1){
+	page, _ := strconv.Atoi(this.GetString(pageName))
+	if page < 1 {
 		page = 1
 	}
 	return page
