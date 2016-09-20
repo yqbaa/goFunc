@@ -11,6 +11,7 @@ import (
 	"Social/controllers"
 
 	"github.com/astaxie/beego"
+	"Social/app/Http/Controller"
 )
 
 func init() {
@@ -25,6 +26,12 @@ func init() {
 				&controllers.UserController{},
 			),
 		),
+		beego.NSNamespace("/test",
+			beego.NSInclude(
+				&Controller.IndexController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
+	beego.Router("/aa", &Controller.IndexController{})
 }
